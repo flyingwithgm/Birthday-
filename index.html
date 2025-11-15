@@ -3,87 +3,535 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="A heartfelt tribute from George to his sister" />
   <title>For Sis — A Surprise from George</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b1020;
-      --accent:#ffd166;
-      --muted:rgba(255,255,255,0.08);
-      --glass:rgba(255,255,255,0.06);
+    :root {
+      --bg: #0b1020;
+      --accent: #ffd166;
+      --muted: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.06);
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(circle at 10% 10%, #071029 0%, var(--bg) 40%);color:#fff}
-    .frame{min-height:100vh;display:grid;place-items:center;padding:24px}
-    .card{width:min(920px,96%);max-width:1100px;border-radius:18px;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 20px 40px rgba(2,6,23,0.6);position:relative;overflow:hidden}
-    .card .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .logo{display:flex;align-items:center;gap:12px}
-    .logo .dot{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#ffd166,#ff9a9e);display:grid;place-items:center;font-weight:800;color:#06121a}
-    .meta{font-size:14px;color:rgba(255,255,255,0.7)}
-    h1{font-family:'Playfair Display',serif;font-size:28px;margin:12px 0 0}
-    p.lead{color:rgba(255,255,255,0.86);margin:8px 0 18px}
-    .cta{display:inline-grid;grid-auto-flow:column;gap:12px}
-    button.primary{background:linear-gradient(90deg,#ffd166,#ff9a9e);border:none;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;color:#081015;transition:transform 0.2s}
-    button.primary:hover{transform:scale(1.05)}
-    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.2s}
-    button.ghost:hover{border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.02)}
+    
+    * { 
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: radial-gradient(circle at 10% 10%, #071029 0%, var(--bg) 40%);
+      color: #fff;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--accent);
+      color: #000;
+      padding: 8px;
+      text-decoration: none;
+      border-radius: 4px;
+      z-index: 100;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .skip-link:focus {
+      top: 6px;
+    }
+    
+    .frame {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    
+    .card {
+      width: min(920px, 96%);
+      max-width: 1100px;
+      border-radius: 18px;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 20px 40px rgba(2,6,23,0.6);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    
+    .card .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo .dot {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ffd166, #ff9a9e);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #06121a;
+      transition: var(--transition);
+    }
+    
+    .logo:hover .dot {
+      transform: rotate(15deg) scale(1.05);
+    }
+    
+    .meta {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      margin: 12px 0 0;
+      line-height: 1.3;
+    }
+    
+    p.lead {
+      color: rgba(255,255,255,0.86);
+      margin: 8px 0 18px;
+      font-size: clamp(16px, 2.5vw, 18px);
+    }
+    
+    .cta {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 12px;
+    }
+    
+    button {
+      font-family: inherit;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      outline: none;
+    }
+    
+    button:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.5);
+    }
+    
+    button.primary {
+      background: linear-gradient(90deg, #ffd166, #ff9a9e);
+      padding: 12px 18px;
+      font-weight: 700;
+      color: #081015;
+    }
+    
+    button.primary:hover, button.primary:focus {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
+    }
+    
+    button.ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 10px 14px;
+      color: rgba(255,255,255,0.8);
+    }
+    
+    button.ghost:hover, button.ghost:focus {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.02);
+      transform: translateY(-2px);
+    }
+    
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    
+    .loading {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      100% { left: 100%; }
+    }
 
-    .cinema{position:absolute;inset:0;background:linear-gradient(180deg, rgba(3,7,18,0.6), rgba(2,3,10,0.9));display:none;flex-direction:column}
-    .stage{flex:1;display:grid;grid-template-columns:1fr 420px;gap:18px;padding:36px}
-    .scene{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:24px;position:relative;overflow:hidden}
-    .left{display:flex;flex-direction:column;gap:18px}
-    .right{display:flex;flex-direction:column;gap:18px}
+    .cinema {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3,7,18,0.6), rgba(2,3,10,0.9));
+      display: none;
+      flex-direction: column;
+      backdrop-filter: blur(5px);
+    }
+    
+    .stage {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 18px;
+      padding: 36px;
+    }
+    
+    .scene {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-    .hero{height:220px;border-radius:12px;background-image:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:grid;grid-template-columns:1fr 280px;align-items:center;padding:18px}
-    .hero .text{padding:12px}
-    .hero h2{font-family:Playfair,serif;margin:0;font-size:26px}
-    .hero p{margin-top:8px;color:rgba(255,255,255,0.85)}
+    .hero {
+      height: 220px;
+      border-radius: 12px;
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    
+    .hero .text {
+      padding: 12px;
+    }
+    
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.3;
+    }
+    
+    .hero p {
+      margin-top: 8px;
+      color: rgba(255,255,255,0.85);
+    }
 
-    .polaroid-row{display:flex;gap:10px;align-items:flex-end}
-    .polaroid{width:120px;background:#111;border-radius:6px;padding:8px 10px 16px 10px;text-align:center;transform-origin:center;box-shadow:0 8px 20px rgba(2,6,23,0.6)}
-    .polaroid img{width:100%;height:80px;object-fit:cover;border-radius:4px}
-    .polaroid small{display:block;margin-top:8px;color:rgba(255,255,255,0.7);font-size:12px}
+    .polaroid-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    
+    .polaroid {
+      width: 120px;
+      background: #111;
+      border-radius: 6px;
+      padding: 8px 10px 16px 10px;
+      text-align: center;
+      transform-origin: center;
+      box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .polaroid:hover {
+      transform: translateY(-5px) rotate(0deg) !important;
+      box-shadow: 0 12px 25px rgba(2,6,23,0.8);
+    }
+    
+    .polaroid img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      filter: brightness(0.9);
+      transition: var(--transition);
+    }
+    
+    .polaroid:hover img {
+      filter: brightness(1);
+    }
+    
+    .polaroid small {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+    }
 
-    .typed{font-family:monospace;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px;height:132px;overflow:auto}
-    .typed p{margin:0;padding:0}
+    .typed {
+      font-family: monospace;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 14px;
+      border-radius: 10px;
+      height: 132px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    
+    .typed p {
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
 
-    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .smallcard{padding:12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03)}
-    .smallcard h4{margin:0 0 8px}
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .smallcard {
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: var(--transition);
+    }
+    
+    .smallcard:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .smallcard h4 {
+      margin: 0 0 8px;
+      color: var(--accent);
+    }
 
-    .takeover{position:fixed;inset:0;background:#05060b;display:flex;align-items:center;justify-content:center;z-index:99;opacity:0;pointer-events:none;transition:opacity 0.5s}
-    .takeover.show{opacity:1;pointer-events:auto}
-    .movie{width:80%;max-width:1100px;background:linear-gradient(180deg,#071029,#071029);padding:28px;border-radius:14px;box-shadow:0 30px 80px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.04)}
-    .movie .panel{display:flex;gap:18px}
-    .scene-slide{flex:1;padding:24px}
-    .big-quote{font-family:Playfair Display,serif;font-size:28px;color:var(--accent);margin:0;transition:all 0.3s}
-    .scene-text{color:rgba(255,255,255,0.9);margin-top:12px;transition:all 0.3s}
+    .takeover {
+      position: fixed;
+      inset: 0;
+      background: #05060b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+      backdrop-filter: blur(10px);
+    }
+    
+    .takeover.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .movie {
+      width: 80%;
+      max-width: 1100px;
+      background: linear-gradient(180deg, #071029, #071029);
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 30px 80px rgba(2,6,23,0.7);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    
+    .movie .panel {
+      display: flex;
+      gap: 18px;
+    }
+    
+    .scene-slide {
+      flex: 1;
+      padding: 24px;
+    }
+    
+    .big-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--accent);
+      margin: 0;
+      transition: var(--transition);
+      line-height: 1.3;
+    }
+    
+    .scene-text {
+      color: rgba(255,255,255,0.9);
+      margin-top: 12px;
+      transition: var(--transition);
+    }
 
-    .hidden{opacity:0;transform:translateY(12px)}
-    .fade-in{animation:fadeIn 700ms ease forwards}
-    @keyframes fadeIn{to{opacity:1;transform:none}}
+    .hidden {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    
+    .fade-in {
+      animation: fadeIn 700ms ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
 
-    .burst{position:absolute;inset:0;pointer-events:none}
-    .confetti{position:absolute;width:10px;height:16px;border-radius:2px}
+    .burst {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 16px;
+      border-radius: 2px;
+    }
 
-    .final{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:center}
-    .letter{padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);transform:translateY(20px);transition:transform 0.6s}
-    .signature{font-family:Playfair Display,serif;font-size:20px;color:var(--accent);margin-top:12px}
+    .final {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: center;
+    }
+    
+    .letter {
+      padding: 22px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      transform: translateY(20px);
+      transition: transform 0.6s;
+    }
+    
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--accent);
+      margin-top: 12px;
+    }
 
-    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.6);font-size:13px}
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd166, #ff9a9e);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
 
-    @media(max-width:880px){
-      .stage{grid-template-columns:1fr}
-      .hero{grid-template-columns:1fr;height:auto}
-      .big-quote{font-size:22px}
-      .final{grid-template-columns:1fr}
-      .movie .panel{flex-direction:column}
-      .cta{grid-auto-flow:row}
-      .card .top{flex-direction:column;align-items:flex-start}
+    @media (max-width: 880px) {
+      .stage {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      
+      .big-quote {
+        font-size: 22px;
+      }
+      
+      .final {
+        grid-template-columns: 1fr;
+      }
+      
+      .movie .panel {
+        flex-direction: column;
+      }
+      
+      .cta {
+        grid-auto-flow: row;
+      }
+      
+      .card .top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .polaroid-row {
+        flex-wrap: wrap;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .frame {
+        padding: 12px;
+      }
+      
+      .card {
+        padding: 18px;
+      }
+      
+      .stage {
+        padding: 18px;
+      }
+      
+      .scene {
+        padding: 18px;
+      }
+      
+      button {
+        min-height: 44px;
+        width: 100%;
+      }
+      
+      .cards {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
   <div class="frame">
     <div class="card" id="card">
       <div class="top">
@@ -99,222 +547,316 @@
           <button class="primary" id="openBtn">Open surprise</button>
         </div>
       </div>
-      <h1 id="title">To my sister — the person who kept me steady</h1>
-      <p class="lead">This will start simple, then everything changes. Sit back (or don't). This is for you — the calls at 2am, the money you sent, the belief you had when I didn't.</p>
+      
+      <main id="main">
+        <h1 id="title">To my sister — the person who kept me steady</h1>
+        <p class="lead">This will start simple, then everything changes. Sit back (or don't). This is for you — the calls at 2am, the money you sent, the belief you had when I didn't.</p>
 
-      <div class="cinema" id="cinema" aria-hidden="true">
-        <div class="stage">
-          <div class="scene left">
-            <div class="hero">
-              <div class="text">
-                <h2 id="heroTitle">For the one who answered every call</h2>
-                <p id="heroSub">From the visa denials, late-night plans, to saying "keep going" — this is a short film of our mess and our wins.</p>
-              </div>
-              <div style="padding:12px;text-align:center">
-                <div style="font-weight:800;font-size:30px;color:var(--accent)">George</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.7)">Made this for you</div>
-              </div>
-            </div>
-
-            <div class="polaroid-row hidden" id="polaroids">
-              <div class="polaroid" style="transform:rotate(-6deg)">
-                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=60" alt="memory">
-                <small>That night we planned again</small>
-              </div>
-              <div class="polaroid" style="transform:rotate(4deg)">
-                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" alt="memory">
-                <small>The call after the decision</small>
-              </div>
-              <div class="polaroid" style="transform:rotate(-2deg)">
-                <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=400&q=60" alt="memory">
-                <small>When you told me to keep going</small>
-              </div>
-            </div>
-
-            <div class="typed hidden" id="typed">
-              <p></p>
-            </div>
-          </div>
-
-          <div class="scene right">
-            <div class="cards">
-              <div class="smallcard hidden" id="card1"><h4>Emotional Anchor</h4><p>You called me when the visa was denied. You didn't say "I told you so" — you said "what's next?"</p></div>
-              <div class="smallcard hidden" id="card2"><h4>Late-night strategist</h4><p>We mapped options: defer, reapply, scholarships. You never let me panic alone.</p></div>
-              <div class="smallcard hidden" id="card3"><h4>Financial lifeline</h4><p>You sent money even when it hurt. I know what you sacrificed.</p></div>
-              <div class="smallcard hidden" id="card4"><h4>Believer</h4><p>You insisted I'm more than one decision. You taught me resilience.</p></div>
-            </div>
-
-            <div style="margin-top:auto;">
-              <button class="primary" id="startMovie">Play the short film</button>
-              <button class="ghost" id="skipMovie">Skip to the last scene</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="takeover" id="takeover">
-          <div class="movie" role="dialog" aria-modal="true">
-            <div class="panel">
-              <div class="scene-slide">
-                <div class="big-quote" id="slideQuote">"You never let me fall."</div>
-                <div class="scene-text" id="slideText">You were the first person to say "reapply" instead of "it's over". You believed when I couldn't.</div>
-              </div>
-              <div class="scene-slide">
-                <div class="letter" id="finalLetter">
-                  <div style="font-size:14px;color:rgba(255,255,255,0.85)">Dear Sister,</div>
-                  <div style="margin-top:12px;color:rgba(255,255,255,0.92)">You answered my panic calls. You were my strategy partner for UMass Dartmouth emails. You told me to be patient after the August denial and helped me rebuild the application. You reminded me who I am — not a decision or one interview.</div>
-                  <div class="signature">— George</div>
+        <div class="cinema" id="cinema" aria-hidden="true">
+          <div class="stage">
+            <div class="scene left">
+              <div class="hero">
+                <div class="text">
+                  <h2 id="heroTitle">For the one who answered every call</h2>
+                  <p id="heroSub">From the visa denials, late-night plans, to saying "keep going" — this is a short film of our mess and our wins.</p>
+                </div>
+                <div style="padding:12px;text-align:center">
+                  <div style="font-weight:800;font-size:30px;color:var(--accent)">George</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.7)">Made this for you</div>
                 </div>
               </div>
-            </div>
-            <footer>
-              <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:12px">
-                <div style="font-size:12px;color:rgba(255,255,255,0.7)">Made with late-night plans and stubborn hope</div>
-              </div>
-            </footer>
-          </div>
-        </div>
 
-        <div class="burst" id="burst"></div>
-      </div>
+              <div class="polaroid-row hidden" id="polaroids">
+                <div class="polaroid" style="transform:rotate(-6deg)" tabindex="0" role="button" aria-label="Memory: That night we planned again">
+                  <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=60" alt="Late night planning session" loading="lazy">
+                  <small>That night we planned again</small>
+                </div>
+                <div class="polaroid" style="transform:rotate(4deg)" tabindex="0" role="button" aria-label="Memory: The call after the decision">
+                  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" alt="Important phone call" loading="lazy">
+                  <small>The call after the decision</small>
+                </div>
+                <div class="polaroid" style="transform:rotate(-2deg)" tabindex="0" role="button" aria-label="Memory: When you told me to keep going">
+                  <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=400&q=60" alt="Encouraging conversation" loading="lazy">
+                  <small>When you told me to keep going</small>
+                </div>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+
+              <div class="typed hidden" id="typed">
+                <p></p>
+              </div>
+            </div>
+
+            <div class="scene right">
+              <div class="cards">
+                <div class="smallcard hidden" id="card1"><h4>Emotional Anchor</h4><p>You called me when the visa was denied. You didn't say "I told you so" — you said "what's next?"</p></div>
+                <div class="smallcard hidden" id="card2"><h4>Late-night strategist</h4><p>We mapped options: defer, reapply, scholarships. You never let me panic alone.</p></div>
+                <div class="smallcard hidden" id="card3"><h4>Financial lifeline</h4><p>You sent money even when it hurt. I know what you sacrificed.</p></div>
+                <div class="smallcard hidden" id="card4"><h4>Believer</h4><p>You insisted I'm more than one decision. You taught me resilience.</p></div>
+              </div>
+
+              <div style="margin-top:auto;">
+                <button class="primary" id="startMovie">Play the short film</button>
+                <button class="ghost" id="skipMovie">Skip to the last scene</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="takeover" id="takeover">
+            <div class="movie" role="dialog" aria-modal="true" aria-labelledby="slideQuote">
+              <div class="panel">
+                <div class="scene-slide">
+                  <div class="big-quote" id="slideQuote">"You never let me fall."</div>
+                  <div class="scene-text" id="slideText">You were the first person to say "reapply" instead of "it's over". You believed when I couldn't.</div>
+                </div>
+                <div class="scene-slide">
+                  <div class="letter" id="finalLetter">
+                    <div style="font-size:14px;color:rgba(255,255,255,0.85)">Dear Sister,</div>
+                    <div style="margin-top:12px;color:rgba(255,255,255,0.92)">You answered my panic calls. You were my strategy partner for UMass Dartmouth emails. You told me to be patient after the August denial and helped me rebuild the application. You reminded me who I am — not a decision or one interview.</div>
+                    <div class="signature">— George</div>
+                  </div>
+                </div>
+              </div>
+              <footer>
+                <div style="display:flex;gap:12px;justify-content:center;align-items:center;margin-top:12px">
+                  <div style="font-size:12px;color:rgba(255,255,255,0.7)">Made with late-night plans and stubborn hope</div>
+                </div>
+              </footer>
+            </div>
+          </div>
+
+          <div class="burst" id="burst"></div>
+        </div>
+      </main>
 
       <footer>Small surprise. Big love. — George</footer>
     </div>
   </div>
 
   <script>
-    const cinema = document.getElementById('cinema');
-    const openBtn = document.getElementById('openBtn');
-    const previewBtn = document.getElementById('previewBtn');
-    const typed = document.getElementById('typed').querySelector('p');
-    const startMovie = document.getElementById('startMovie');
-    const skipMovie = document.getElementById('skipMovie');
-    const takeover = document.getElementById('takeover');
-    const burst = document.getElementById('burst');
+    // Performance optimization - wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+      const cinema = document.getElementById('cinema');
+      const openBtn = document.getElementById('openBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const typed = document.getElementById('typed').querySelector('p');
+      const startMovie = document.getElementById('startMovie');
+      const skipMovie = document.getElementById('skipMovie');
+      const takeover = document.getElementById('takeover');
+      const burst = document.getElementById('burst');
+      const progressFill = document.getElementById('progressFill');
 
-    const lines = [
-      "August: first visa denial. I called you and cried. You said: 'We fix this.'",
-      "We reworded the statement. We waited. We planned scholarships. You stayed calm.",
-      "Dad was loud, unpredictable — you listened and told me 'focus on the plan.'",
-      "You sent money when I needed it. You told me to keep studying. You kept believing.",
-      "This page is small. It's not enough. But it's honest: I couldn't have kept going without you."
-    ];
-
-    function showCinema(){
-      cinema.style.display='flex';
-      cinema.setAttribute('aria-hidden','false');
-      setTimeout(()=>document.querySelectorAll('.hidden').forEach(n=>n.classList.remove('hidden')), 300);
-      typeLines(0);
-    }
-
-    let charIdx=0;
-    function typeLines(i){
-      if(i>=lines.length) return;
-      const str = lines[i];
-      charIdx = 0; typed.textContent='';
-      const id = setInterval(()=>{
-        typed.textContent += str.charAt(charIdx);
-        charIdx++;
-        typed.parentElement.scrollTop = typed.parentElement.scrollHeight;
-        if(charIdx>=str.length){
-          clearInterval(id);
-          setTimeout(()=>typeLines(i+1),900);
-        }
-      },28);
-    }
-
-    function burstConfetti(){
-      const colors=['#ff6b6b','#4ecdc4','#ffd166','#96ceb4','#ff9ff3'];
-      for(let i=0;i<40;i++){
-        const el=document.createElement('div');
-        el.className='confetti';
-        el.style.left = (20 + Math.random()*60) + '%';
-        el.style.top = (10 + Math.random()*60) + '%';
-        el.style.background = colors[Math.floor(Math.random()*colors.length)];
-        el.style.transform = `rotate(${Math.random()*360}deg)`;
-        el.style.opacity = Math.random()*0.9+0.2;
-        el.style.width = (6 + Math.random()*12)+'px';
-        el.style.height = (8 + Math.random()*14)+'px';
-        burst.appendChild(el);
-        const dy = window.innerHeight * (0.2 + Math.random()*0.7);
-        el.animate([
-          {transform:'translateY(0) rotate(0deg)'},
-          {transform:`translateY(${dy}px) rotate(${Math.random()*720}deg)`}
-        ],{
-          duration:1200+Math.random()*1000,
-          easing:'cubic-bezier(.2,.8,.2,1)'
-        }).onfinish = ()=>el.remove();
-      }
-    }
-
-    function playMovie(){
-      takeover.classList.add('show');
-      burstConfetti();
-      const quotes = [
-        {q:'You never let me fall.', t:'You were on the phone at 2am and again at 3am. You planned and re-planned.'},
-        {q:'You paid when it mattered.', t:'You sent money when the family needed it — and still told me to dream bigger.'},
-        {q:'We rebuilt the application.', t:'UMass Dartmouth had one more shot; you helped me write the email and keep hope.'}
+      const lines = [
+        "August: first visa denial. I called you and cried. You said: 'We fix this.'",
+        "We reworded the statement. We waited. We planned scholarships. You stayed calm.",
+        "Dad was loud, unpredictable — you listened and told me 'focus on the plan.'",
+        "You sent money when I needed it. You told me to keep studying. You kept believing.",
+        "This page is small. It's not enough. But it's honest: I couldn't have kept going without you."
       ];
-      let i=0;
-      const qEl = document.getElementById('slideQuote');
-      const tEl = document.getElementById('slideText');
-      const interval = setInterval(()=>{
-        if(i>=quotes.length){ 
-          clearInterval(interval); 
-          setTimeout(()=>endMovie(),900); 
-          return; 
-        }
-        qEl.classList.add('hidden'); 
-        tEl.classList.add('hidden');
-        setTimeout(()=>{
-          qEl.textContent = '"'+quotes[i].q+'"';
-          tEl.textContent = quotes[i].t;
-          qEl.classList.remove('hidden'); 
-          tEl.classList.remove('hidden');
-          burstConfetti();
-        },300);
-        i++;
-      },2800);
-    }
 
-    function endMovie(){
-      document.getElementById('finalLetter').style.transform='translateY(0)';
-      setTimeout(()=>{
-        takeover.classList.remove('show');
-        burstConfetti();
-      },1200);
-    }
+      // Preload images for better performance
+      function preloadImages() {
+        const images = [
+          'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=60',
+          'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60',
+          'https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=400&q=60'
+        ];
+        
+        images.forEach(src => {
+          const img = new Image();
+          img.src = src;
+        });
+      }
 
-    openBtn.addEventListener('click', ()=>{
-      openBtn.disabled=true; 
-      openBtn.textContent='Opening...';
-      setTimeout(()=>{ 
-        openBtn.style.display='none'; 
-        previewBtn.style.display='none'; 
-        showCinema(); 
-        openBtn.disabled=false;
-      },700);
-    });
-
-    previewBtn.addEventListener('click', ()=>{
-      cinema.style.display='flex';
-      setTimeout(()=>{
-        document.getElementById('heroTitle').textContent = 'A short trailer';
-        document.getElementById('heroSub').textContent = 'Press play to see the whole thing — or skip to the last scene.';
-        document.querySelectorAll('.hidden').forEach(n=>n.classList.remove('hidden'));
+      function showCinema(){
+        cinema.style.display = 'flex';
+        cinema.setAttribute('aria-hidden', 'false');
+        
+        // Use requestAnimationFrame for smoother animations
+        requestAnimationFrame(() => {
+          document.querySelectorAll('.hidden').forEach(n => {
+            n.classList.remove('hidden');
+            n.classList.add('fade-in');
+          });
+        });
+        
         typeLines(0);
-      },120);
-    });
+        
+        // Add interactive polaroids
+        document.querySelectorAll('.polaroid').forEach(polaroid => {
+          polaroid.addEventListener('click', function() {
+            this.style.transform = 'scale(1.1) rotate(0deg)';
+            setTimeout(() => {
+              this.style.transform = this.getAttribute('data-original-transform') || '';
+            }, 500);
+          });
+          
+          // Store original transform for reset
+          polaroid.setAttribute('data-original-transform', polaroid.style.transform);
+        });
+      }
 
-    startMovie.addEventListener('click', ()=>playMovie());
-    skipMovie.addEventListener('click', ()=>{ 
-      playMovie(); 
-      setTimeout(endMovie,900); 
-    });
+      let charIdx = 0;
+      let currentLine = 0;
+      
+      function typeLines(i){
+        if(i >= lines.length) {
+          progressFill.style.width = '100%';
+          return;
+        }
+        
+        const str = lines[i];
+        charIdx = 0;
+        typed.textContent = '';
+        currentLine = i;
+        
+        // Update progress bar
+        progressFill.style.width = `${(i / lines.length) * 100}%`;
+        
+        const id = setInterval(() => {
+          typed.textContent += str.charAt(charIdx);
+          charIdx++;
+          typed.parentElement.scrollTop = typed.parentElement.scrollHeight;
+          
+          if(charIdx >= str.length){
+            clearInterval(id);
+            setTimeout(() => typeLines(i + 1), 900);
+          }
+        }, 28);
+      }
 
-    window.addEventListener('keydown', (e)=>{ 
-      if(e.key.toLowerCase()==='o'){ 
-        openBtn.click(); 
-      } 
+      function burstConfetti(){
+        const colors = ['#ff6b6b', '#4ecdc4', '#ffd166', '#96ceb4', '#ff9ff3'];
+        
+        for(let i = 0; i < 40; i++){
+          const el = document.createElement('div');
+          el.className = 'confetti';
+          el.style.left = (20 + Math.random() * 60) + '%';
+          el.style.top = (10 + Math.random() * 60) + '%';
+          el.style.background = colors[Math.floor(Math.random() * colors.length)];
+          el.style.transform = `rotate(${Math.random() * 360}deg)`;
+          el.style.opacity = Math.random() * 0.9 + 0.2;
+          el.style.width = (6 + Math.random() * 12) + 'px';
+          el.style.height = (8 + Math.random() * 14) + 'px';
+          burst.appendChild(el);
+          
+          const dy = window.innerHeight * (0.2 + Math.random() * 0.7);
+          el.animate([
+            {transform: 'translateY(0) rotate(0deg)'},
+            {transform: `translateY(${dy}px) rotate(${Math.random() * 720}deg)`}
+          ], {
+            duration: 1200 + Math.random() * 1000,
+            easing: 'cubic-bezier(.2,.8,.2,1)'
+          }).onfinish = () => el.remove();
+        }
+      }
+
+      function playMovie(){
+        takeover.classList.add('show');
+        burstConfetti();
+        
+        const quotes = [
+          {q: 'You never let me fall.', t: 'You were on the phone at 2am and again at 3am. You planned and re-planned.'},
+          {q: 'You paid when it mattered.', t: 'You sent money when the family needed it — and still told me to dream bigger.'},
+          {q: 'We rebuilt the application.', t: 'UMass Dartmouth had one more shot; you helped me write the email and keep hope.'}
+        ];
+        
+        let i = 0;
+        const qEl = document.getElementById('slideQuote');
+        const tEl = document.getElementById('slideText');
+        
+        const interval = setInterval(() => {
+          if(i >= quotes.length){ 
+            clearInterval(interval); 
+            setTimeout(() => endMovie(), 900); 
+            return; 
+          }
+          
+          qEl.classList.add('hidden'); 
+          tEl.classList.add('hidden');
+          
+          setTimeout(() => {
+            qEl.textContent = '"' + quotes[i].q + '"';
+            tEl.textContent = quotes[i].t;
+            qEl.classList.remove('hidden'); 
+            tEl.classList.remove('hidden');
+            burstConfetti();
+          }, 300);
+          
+          i++;
+        }, 2800);
+      }
+
+      function endMovie(){
+        document.getElementById('finalLetter').style.transform = 'translateY(0)';
+        
+        setTimeout(() => {
+          takeover.classList.remove('show');
+          burstConfetti();
+          
+          // Save viewing state
+          localStorage.setItem('surpriseViewed', 'true');
+        }, 1200);
+      }
+
+      // Event listeners with improved UX
+      openBtn.addEventListener('click', () => {
+        openBtn.disabled = true; 
+        openBtn.textContent = 'Opening...';
+        openBtn.classList.add('loading');
+        
+        setTimeout(() => { 
+          openBtn.style.display = 'none'; 
+          previewBtn.style.display = 'none'; 
+          showCinema(); 
+          openBtn.disabled = false;
+          openBtn.classList.remove('loading');
+        }, 700);
+      });
+
+      previewBtn.addEventListener('click', () => {
+        cinema.style.display = 'flex';
+        
+        setTimeout(() => {
+          document.getElementById('heroTitle').textContent = 'A short trailer';
+          document.getElementById('heroSub').textContent = 'Press play to see the whole thing — or skip to the last scene.';
+          document.querySelectorAll('.hidden').forEach(n => {
+            n.classList.remove('hidden');
+            n.classList.add('fade-in');
+          });
+          typeLines(0);
+        }, 120);
+      });
+
+      startMovie.addEventListener('click', () => playMovie());
+      
+      skipMovie.addEventListener('click', () => { 
+        playMovie(); 
+        setTimeout(endMovie, 900); 
+      });
+
+      // Keyboard shortcuts
+      window.addEventListener('keydown', (e) => { 
+        if(e.key.toLowerCase() === 'o'){ 
+          openBtn.click(); 
+        } 
+        
+        // Escape key to close takeover
+        if(e.key === 'Escape' && takeover.classList.contains('show')) {
+          takeover.classList.remove('show');
+        }
+      });
+      
+      // Preload images after page load
+      window.addEventListener('load', preloadImages);
+      
+      // Check if already viewed
+      if(localStorage.getItem('surpriseViewed')) {
+        document.querySelector('.meta').textContent += ' (Welcome back!)';
+      }
     });
   </script>
 </body>
