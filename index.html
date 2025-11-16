@@ -1,321 +1,1040 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, Heart, Sparkle, Star, Users, Globe, Shield, Lightbulb } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 22nd Birthday!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-const App = () => {
-  const [currentScene, setCurrentScene] = useState(0);
-  const [openedEnvelopes, setOpenedEnvelopes] = useState([false, false, false]);
-  const [showConfetti, setShowConfetti] = useState(false);
+        body {
+            background: linear-gradient(135deg, #ffe0e6, #f8c8dc, #e6b8d5, #d4a5d1);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowConfetti(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 107, 107, 0.4);
+            animation: float 15s infinite ease-in-out;
+            z-index: 1;
+        }
 
-  const themes = [
-    { icon: Sparkle, title: "Joy", description: "May your days be filled with laughter, light, and moments that make your heart sing." },
-    { icon: Lightbulb, title: "Growth", description: "Every challenge you face is shaping you into the extraordinary woman you're meant to be." },
-    { icon: Star, title: "Beauty", description: "Your inner radiance shines brighter than any star—never dim your light for anyone." },
-    { icon: Shield, title: "Strength", description: "Your resilience inspires everyone around you. Keep standing tall, even through storms." },
-    { icon: Globe, title: "Blessings", description: "May divine favor surround you, opening doors no one can shut and filling your path with grace." },
-    { icon: Users, title: "Impact", description: "Your kindness ripples outward, touching lives in ways you may never fully know." }
-  ];
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-100vh) rotate(360deg) translateX(50px);
+                opacity: 0.8;
+            }
+        }
 
-  const envelopeMessages = [
-    {
-      title: "I'm So Proud of You",
-      content: "Watching you grow into the incredible woman you are today fills my heart with awe. Your dedication, grace, and unwavering spirit make me proud to call you my sister. Never doubt your worth—you shine brighter than you know."
-    },
-    {
-      title: "Success & Divine Favor",
-      content: "May God's hand guide your steps, His wisdom direct your decisions, and His favor open every door meant for you. Success isn't just about achievements—it's about walking in your purpose with joy. And you're doing it beautifully."
-    },
-    {
-      title: "Your Kindness & Strength",
-      content: "In a world that often feels harsh, your kindness is a rare gift. And your strength? It's not just in what you endure, but in how you lift others while carrying your own burdens. Never lose that beautiful balance."
-    }
-  ];
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6b6b;
+            opacity: 0;
+            z-index: 999;
+            pointer-events: none;
+        }
 
-  const handleOpenEnvelope = (index) => {
-    setOpenedEnvelopes(prev => {
-      const newOpened = [...prev];
-      newOpened[index] = true;
-      return newOpened;
-    });
-  };
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%);
+            opacity: 0;
+            z-index: 2;
+            animation: bubble-float 8s infinite ease-in-out;
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 overflow-hidden">
-      {/* Floating Hearts Background */}
-      {[...Array(12)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-pink-200"
-          animate={{
-            x: [0, Math.random() * 100 - 50, 0],
-            y: [0, -100, -200],
-            scale: [0.5, 1, 0.5],
-            rotate: [0, 180, 360]
-          }}
-          transition={{
-            duration: 8 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 2
-          }}
-          style={{
-            left: `${10 + Math.random() * 80}%`,
-            top: `${20 + Math.random() * 60}%`,
-            fontSize: `${12 + Math.random() * 8}px`
-          }}
-        >
-          <Heart fill="currentColor" className="opacity-60" />
-        </motion.div>
-      ))}
+        @keyframes bubble-float {
+            0%, 100% {
+                transform: translateY(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0;
+            }
+        }
 
-      {/* Confetti Effect */}
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none">
-          {[...Array(150)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 rounded-full"
-              style={{
-                backgroundColor: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd'][Math.floor(Math.random() * 6)],
-                left: `${Math.random() * 100}%`,
-                top: '-10px'
-              }}
-              animate={{
-                y: [0, window.innerHeight + 100],
-                x: [0, (Math.random() - 0.5) * 200],
-                rotate: [0, 360]
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                ease: "easeOut"
-              }}
-            />
-          ))}
+        .sparkle {
+            position: absolute;
+            color: white;
+            font-size: 16px;
+            opacity: 0;
+            z-index: 3;
+            animation: sparkle-pulse 3s infinite;
+        }
+
+        @keyframes sparkle-pulse {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .header.animated {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            background: linear-gradient(45deg, #ff6b6b, #9c27b0, #673ab7, #ff6b6b);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(255, 107, 107, 0.2);
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #5a3e5a;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .header p::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+            border-radius: 3px;
+            animation: lineGlow 2s infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .scene {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            display: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .gift-box {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .gift {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff6b6b, #9c27b0);
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(156, 39, 176, 0.3);
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: giftFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .gift:hover {
+            transform: scale(1.15) rotate(5deg) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(156, 39, 176, 0.5);
+        }
+
+        .gift::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%);
+            border-radius: 10px;
+        }
+
+        .gift::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .gift-icon {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,107,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-card:hover::before {
+            opacity: 1;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .theme-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #9c27b0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            animation: iconSpin 4s infinite linear;
+        }
+
+        @keyframes iconSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .theme-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5a3e5a;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .theme-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #9c27b0);
+            border-radius: 1px;
+        }
+
+        .theme-desc {
+            color: #7a5a7a;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .envelopes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .envelope {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .envelope:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 50px rgba(255, 165, 0, 0.5);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .envelope:hover::before {
+            opacity: 1;
+        }
+
+        .envelope-closed {
+            display: block;
+            transform: translateZ(0);
+        }
+
+        .envelope-opened {
+            display: none;
+            transform: translateZ(20px);
+        }
+
+        .envelope.opened .envelope-closed {
+            display: none;
+        }
+
+        .envelope.opened .envelope-opened {
+            display: block;
+        }
+
+        .envelope-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #8b4513;
+            animation: envelopeBounce 2s infinite;
+        }
+
+        @keyframes envelopeBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .envelope-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #8b4513;
+            margin-bottom: 1rem;
+        }
+
+        .envelope-content {
+            color: #5a3e2a;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: block;
+            margin: 2rem auto;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #9c27b0);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.4);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(156, 39, 176, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+
+        .btn:hover::after {
+            left: 120%;
+        }
+
+        .final-message {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: messageFloat 6s infinite ease-in-out;
+        }
+
+        @keyframes messageFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            75% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .final-message::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff6b6b, #9c27b0, #673ab7, #ff6b6b);
+            background-size: 400% 400%;
+            border-radius: 27px;
+            z-index: -1;
+            animation: borderColor 3s ease infinite;
+        }
+
+        @keyframes borderColor {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .final-heart {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #9c27b0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 2.5rem;
+            animation: pulse 2s infinite alternate;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 107, 107, 0.4); }
+            100% { transform: scale(1.2); box-shadow: 0 0 40px rgba(156, 39, 176, 0.8); }
+        }
+
+        .final-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #5a3e5a;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .final-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, #9c27b0, transparent);
+            border-radius: 3px;
+        }
+
+        .final-text {
+            color: #6a4a6a;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .final-text p {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .final-text p:last-child {
+            color: #ff6b6b;
+            font-weight: bold;
+            background: rgba(255, 107, 107, 0.1);
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .final-birthday {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #9c27b0, #673ab7);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glowText 2s infinite alternate, gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes glowText {
+            from { text-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+            to { text-shadow: 0 0 25px rgba(156, 39, 176, 0.8), 0 0 40px rgba(103, 58, 183, 0.6); }
+        }
+
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(156, 39, 176, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-dot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #9c27b0);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-dot:hover::before {
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: transparent;
+        }
+
+        .nav-dot.active::before {
+            transform: scale(1);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .gift {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .final-message {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+            
+            .final-title {
+                font-size: 1.8rem;
+            }
+            
+            .themes-grid, .envelopes-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="hearts-container"></div>
+    <div id="confetti-container"></div>
+    <div id="bubbles-container"></div>
+    <div id="sparkles-container"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Happy 22nd Birthday!</h1>
+            <p>To my amazing sister—may this year bring you closer to your dreams and fill your heart with peace.</p>
         </div>
-      )}
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-            Happy 22nd Birthday!
-          </h1>
-          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            To my amazing sister—may this year bring you closer to your dreams and fill your heart with peace.
-          </p>
-        </motion.div>
-
-        {/* Gift Box Scene */}
-        <AnimatePresence mode="wait">
-          {currentScene === 0 && (
-            <motion.div
-              key="gift"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="flex justify-center mb-16"
-            >
-              <motion.div
-                className="relative cursor-pointer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setCurrentScene(1)}
-              >
-                <div className="w-32 h-32 bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg shadow-2xl relative overflow-hidden">
-                  <div className="absolute inset-0 bg-white opacity-20 transform rotate-45"></div>
-                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-white rounded"></div>
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-2 h-16 bg-white rounded"></div>
-                </div>
-                <motion.div
-                  className="absolute -bottom-4 left-1/2 transform -translate-x-1/2"
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <Gift className="text-white w-8 h-8" />
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          )}
-
-          {/* Themes Section */}
-          {currentScene === 1 && (
-            <motion.div
-              key="themes"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6 }}
-              className="mb-16"
-            >
-              <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-                Wishes for Your Journey Ahead
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {themes.map((theme, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20"
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center mb-4">
-                      <theme.icon className="text-white w-6 h-6" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{theme.title}</h3>
-                    <p className="text-gray-600">{theme.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-              <div className="text-center mt-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setCurrentScene(2)}
-                  className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Open Your Messages
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Envelopes Section */}
-          {currentScene === 2 && (
-            <motion.div
-              key="envelopes"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6 }}
-              className="mb-16"
-            >
-              <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-                Personal Messages Just for You
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                {envelopeMessages.map((msg, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.2 }}
-                    className="cursor-pointer"
-                    onClick={() => handleOpenEnvelope(index)}
-                  >
-                    <div className="relative bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-200">
-                      {!openedEnvelopes[index] ? (
-                        <>
-                          <div className="absolute top-4 right-4 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                            <Sparkle className="text-white w-4 h-4" />
-                          </div>
-                          <div className="text-center py-8">
-                            <div className="w-16 h-12 bg-red-500 mx-auto mb-4 rounded"></div>
-                            <p className="text-amber-800 font-semibold">Message {index + 1}</p>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <h3 className="text-lg font-bold text-amber-800 mb-3">{msg.title}</h3>
-                          <p className="text-amber-700 text-sm leading-relaxed">{msg.content}</p>
+        <div id="scenes-container">
+            <!-- Scene 1: Gift Box -->
+            <div class="scene active" id="scene1">
+                <div class="gift-box">
+                    <div class="gift">
+                        <div class="gift-icon">
+                            <i class="fas fa-gift"></i>
                         </div>
-                      )}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-              <div className="text-center mt-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setCurrentScene(3)}
-                  className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Final Birthday Blessing
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Final Message */}
-          {currentScene === 3 && (
-            <motion.div
-              key="final"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/30 max-w-3xl mx-auto">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                  className="w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8"
-                >
-                  <Heart className="text-white w-10 h-10" fill="white" />
-                </motion.div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                  From Your Loving Brother
-                </h2>
-                <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
-                  <p>
-                    On this special day, I want you to know just how deeply I admire you. 
-                    You've become a woman of remarkable strength, wisdom, and grace.
-                  </p>
-                  <p>
-                    As your younger brother, watching you navigate life with such courage 
-                    and kindness fills me with pride I can hardly put into words.
-                  </p>
-                  <p>
-                    May God's blessings follow you every step of this new year. 
-                    May you find true happiness in both your dreams and your daily moments. 
-                    May your health remain strong, your spirit unbreakable, and your heart 
-                    always open to love and joy.
-                  </p>
-                  <p className="font-semibold text-pink-600">
-                    Keep shining, sister. The world needs your light.
-                  </p>
                 </div>
-                <motion.div
-                  className="mt-8 text-pink-600 font-bold text-xl"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Happy 22nd Birthday! 🎉
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
 
-        {/* Navigation Dots */}
-        <div className="flex justify-center space-x-2 mt-12">
-          {[0, 1, 2, 3].map((scene) => (
-            <button
-              key={scene}
-              onClick={() => setCurrentScene(scene)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentScene === scene ? 'bg-pink-500' : 'bg-gray-300'
-              }`}
-            />
-          ))}
+            <!-- Scene 2: Themes -->
+            <div class="scene" id="scene2">
+                <h2 class="header-title">Wishes for Your Journey Ahead</h2>
+                <div class="themes-grid" id="themes-grid">
+                    <!-- Themes will be populated by JS -->
+                </div>
+                <button class="btn" id="next-btn-1">Open Your Messages</button>
+            </div>
+
+            <!-- Scene 3: Envelopes -->
+            <div class="scene" id="scene3">
+                <h2 class="header-title">Personal Messages Just for You</h2>
+                <div class="envelopes-container" id="envelopes-container">
+                    <!-- Envelopes will be populated by JS -->
+                </div>
+                <button class="btn" id="next-btn-2">Final Birthday Blessing</button>
+            </div>
+
+            <!-- Scene 4: Final Message -->
+            <div class="scene" id="scene4">
+                <div class="final-message">
+                    <div class="final-heart">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2 class="final-title">From Your Loving Brother</h2>
+                    <div class="final-text">
+                        <p>On this special day, I want you to know just how deeply I admire you. You've become a woman of remarkable strength, wisdom, and grace.</p>
+                        <p>As your younger brother, watching you navigate life with such courage and kindness fills me with pride I can hardly put into words.</p>
+                        <p>May God's blessings follow you every step of this new year. May you find true happiness in both your dreams and your daily moments. May your health remain strong, your spirit unbreakable, and your heart always open to love and joy.</p>
+                        <p>Keep shining, sister. The world needs your light.</p>
+                    </div>
+                    <div class="final-birthday">Happy 22nd Birthday! 🎉</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
 
-export default App;
+        <div class="nav-dots" id="nav-dots">
+            <div class="nav-dot active" data-scene="0"></div>
+            <div class="nav-dot" data-scene="1"></div>
+            <div class="nav-dot" data-scene="2"></div>
+            <div class="nav-dot" data-scene="3"></div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced confetti system
+        function createMassiveConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#ff9ff3', '#54a0ff', '#feca57', '#ff9ff3', '#5f27cd', '#00d2d3'];
+            const totalConfetti = 300; // Increased from 150 to 300
+            
+            for (let i = 0; i < totalConfetti; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.width = (3 + Math.random() * 12) + 'px';
+                confetti.style.height = (3 + Math.random() * 12) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.opacity = '0';
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                container.appendChild(confetti);
+                
+                // Staggered animation start
+                setTimeout(() => {
+                    const duration = 2 + Math.random() * 3;
+                    const delay = Math.random() * 2;
+                    confetti.style.transition = `all ${duration}s ease-out ${delay}s`;
+                    confetti.style.transform = `translateY(${window.innerHeight + 100}px) translateX(${(Math.random() - 0.5) * 400}px) rotate(${Math.random() * 720}deg)`;
+                    confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                }, i * 10);
+            }
+            
+            // Continuous confetti
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createConfettiBurst();
+                }
+            }, 2000);
+        }
+        
+        function createConfettiBurst() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd'];
+            
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = '50vw';
+                confetti.style.top = '50vh';
+                confetti.style.width = (4 + Math.random() * 8) + 'px';
+                confetti.style.height = (4 + Math.random() * 8) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.opacity = '1';
+                container.appendChild(confetti);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 200 + Math.random() * 300;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                
+                confetti.style.transition = 'all 1.5s ease-out';
+                confetti.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 720}deg)`;
+                confetti.style.opacity = '0';
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 1500);
+            }
+        }
+
+        // Create floating hearts with enhanced movement
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 30; i++) { // Increased from 20 to 30
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.animationDuration = (8 + Math.random() * 12) + 's';
+                heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+                heart.style.animation = `float ${(8 + Math.random() * 12)}s infinite ease-in-out`;
+                container.appendChild(heart);
+            }
+        }
+
+        // Create floating bubbles
+        function createBubbles() {
+            const container = document.getElementById('bubbles-container');
+            for (let i = 0; i < 50; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.width = (20 + Math.random() * 60) + 'px';
+                bubble.style.height = (20 + Math.random() * 60) + 'px';
+                bubble.style.left = Math.random() * 100 + 'vw';
+                bubble.style.top = Math.random() * 100 + 'vh';
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                bubble.style.animationDuration = (6 + Math.random() * 8) + 's';
+                container.appendChild(bubble);
+            }
+        }
+
+        // Create sparkles
+        function createSparkles() {
+            const container = document.getElementById('sparkles-container');
+            const sparkles = ['✨', '🌟', '⭐', '💫'];
+            
+            for (let i = 0; i < 40; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.fontSize = (12 + Math.random() * 8) + 'px';
+                container.appendChild(sparkle);
+            }
+            
+            // Continuous sparkles
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+                    sparkle.style.left = Math.random() * 100 + 'vw';
+                    sparkle.style.top = Math.random() * 100 + 'vh';
+                    sparkle.style.fontSize = (14 + Math.random() * 10) + 'px';
+                    document.getElementById('sparkles-container').appendChild(sparkle);
+                    
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 3000);
+                }
+            }, 500);
+        }
+
+        // Scene management
+        let currentScene = 0;
+        const scenes = document.querySelectorAll('.scene');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        function showScene(sceneIndex) {
+            // Hide all scenes
+            scenes.forEach(scene => scene.classList.remove('active'));
+            // Show current scene
+            scenes[sceneIndex].classList.add('active');
+            currentScene = sceneIndex;
+            
+            // Update navigation dots
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === sceneIndex);
+            });
+            
+            // Trigger animations for elements in the scene
+            if (sceneIndex === 1) {
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('.theme-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    });
+                }, 300);
+            }
+            
+            // Create confetti burst on scene change
+            if (sceneIndex > 0) {
+                createConfettiBurst();
+            }
+        }
+
+        // Theme data
+        const themes = [
+            {
+                icon: '✨',
+                title: 'Joy',
+                description: 'May your days be filled with laughter, light, and moments that make your heart sing.'
+            },
+            {
+                icon: '🌱',
+                title: 'Growth',
+                description: 'Every challenge you face is shaping you into the extraordinary woman you\'re meant to be.'
+            },
+            {
+                icon: '⭐',
+                title: 'Beauty',
+                description: 'Your inner radiance shines brighter than any star—never dim your light for anyone.'
+            },
+            {
+                icon: '💪',
+                title: 'Strength',
+                description: 'Your resilience inspires everyone around you. Keep standing tall, even through storms.'
+            },
+            {
+                icon: '🙏',
+                title: 'Blessings',
+                description: 'May divine favor surround you, opening doors no one can shut and filling your path with grace.'
+            },
+            {
+                icon: '🤝',
+                title: 'Impact',
+                description: 'Your kindness ripples outward, touching lives in ways you may never fully know.'
+            }
+        ];
+
+        // Envelope messages
+        const envelopes = [
+            {
+                title: 'I\'m So Proud of You',
+                content: 'Watching you grow into the incredible woman you are today fills my heart with awe. Your dedication, grace, and unwavering spirit make me proud to call you my sister. Never doubt your worth—you shine brighter than you know.'
+            },
+            {
+                title: 'Success & Divine Favor',
+                content: 'May God\'s hand guide your steps, His wisdom direct your decisions, and His favor open every door meant for you. Success isn\'t just about achievements—it\'s about walking in your purpose with joy. And you\'re doing it beautifully.'
+            },
+            {
+                title: 'Your Kindness & Strength',
+                content: 'In a world that often feels harsh, your kindness is a rare gift. And your strength? It\'s not just in what you endure, but in how you lift others while carrying your own burdens. Never lose that beautiful balance.'
+            }
+        ];
+
+        // Populate themes
+        function populateThemes() {
+            const themesGrid = document.getElementById('themes-grid');
+            themes.forEach(theme => {
+                const card = document.createElement('div');
+                card.className = 'theme-card';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.innerHTML = `
+                    <div class="theme-icon">${theme.icon}</div>
+                    <h3 class="theme-title">${theme.title}</h3>
+                    <p class="theme-desc">${theme.description}</p>
+                `;
+                themesGrid.appendChild(card);
+            });
+        }
+
+        // Populate envelopes
+        function populateEnvelopes() {
+            const envelopesContainer = document.getElementById('envelopes-container');
+            envelopes.forEach((envelope, index) => {
+                const envelopeEl = document.createElement('div');
+                envelopeEl.className = 'envelope';
+                envelopeEl.dataset.index = index;
+                envelopeEl.innerHTML = `
+                    <div class="envelope-closed">
+                        <div class="envelope-icon">
+                            <i class="fas fa-envelope-open"></i>
+                        </div>
+                        <div class="envelope-title">Message ${index + 1}</div>
+                    </div>
+                    <div class="envelope-opened">
+                        <div class="envelope-title">${envelope.title}</div>
+                        <p class="envelope-content">${envelope.content}</p>
+                    </div>
+                `;
+                envelopesContainer.appendChild(envelopeEl);
+                
+                envelopeEl.addEventListener('click', () => {
+                    envelopeEl.classList.add('opened');
+                    // Create small confetti burst on opening
+                    createConfettiBurst();
+                });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add header animation class after brief delay
+            setTimeout(() => {
+                document.querySelector('.header').classList.add('animated');
+            }, 200);
+            
+            createFloatingHearts();
+            createBubbles();
+            createSparkles();
+            
+            // Massive confetti on load
+            setTimeout(createMassiveConfetti, 1000);
+            
+            populateThemes();
+            populateEnvelopes();
+            
+            // Gift box click event
+            document.querySelector('.gift-box').addEventListener('click', () => {
+                showScene(1);
+            });
+            
+            // Navigation buttons
+            document.getElementById('next-btn-1').addEventListener('click', () => {
+                showScene(2);
+            });
+            
+            document.getElementById('next-btn-2').addEventListener('click', () => {
+                showScene(3);
+            });
+            
+            // Navigation dots
+            navDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const sceneIndex = parseInt(dot.dataset.scene);
+                    showScene(sceneIndex);
+                });
+            });
+            
+            // Continuous background animations
+            setInterval(createConfettiBurst, 8000);
+        });
+    </script>
+</body>
+</html>
+
